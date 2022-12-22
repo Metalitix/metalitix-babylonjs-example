@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MetalitixLogger BabylonJS example</title>
+    <script src="../node_modules/babylonjs/babylon.js"></script>
+    <script src="../node_modules/babylonjs-loaders/babylon.glTFFileLoader.js"></script>
+    <script src="https://cdn.metalitix.com/scripts/mtx-poll-babylon-js.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="renderCanvas" style="width: 100vw; height: 100vh"></canvas>
+
+    <script>
+      const canvas = document.getElementById('renderCanvas');
+      const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+
+      const delayCreateScene = function () {
+        const scene = new BABYLON.Scene(engine);
+        const camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
+        camera.setTarget(BABYLON.Vector3.Zero()); // Target the camera to scene origin
+        camera.attachControl(canvas, true);
+
+        BABYLON.SceneLoader.Append('glTF/', 'Teapot.gltf', scene, function (scene) {
+          scene.createDefaultCameraOrLight(true, true, true);
+
+          // The default camera looks at the back of the asset.
+          // Rotate the camera by 180 degrees to the front of the asset.
+          scene.activeCamera.alpha += Math.PI;
+        });
+
+        engine.runRenderLoop(function () {
+          scene.render();
+        });
+        window.addEventListener('resize', function () {
+          engine.resize();
+        });
+
+        return scene;
+      };
+
+      /** 
+       * METALITIX INITIALIZATION
+       * The code below initializes a Metalitix logger with custom settings:
+       *  - Record data every half a second
+       *  - Enable a random prompt asking the user their engagement level
+       *  - Set the color theme of the prompt 'white'
+       */
+      const metalitixLoggerAppKey = 'YOUR_APP_KEY_CODE';
+      const optionalPollInterval = 500;
+      const optionalShowSurvey = true;
+      const optionalSurveyTheme = 'white';
+      const logger = new MetalitixLogger(metalitixLoggerAppKey, {
+        pollInterval: optionalPollInterval,
+        showSurvey: optionalShowSurvey,
+        surveyTheme: optionalSurveyTheme,
+      });
+
+      /**
+       * METALITIX LOGGING
+       * The code below tells Metalitix to begin recording behavior in the specified scene.
+       */
+      const scene = delayCreateScene();
+      logger.startSession(scene);
+
+      /**
+       * METALITIX CUSTOM LOGGING
+       * The code below will record key presses of 'M', 'T', and 'X' to Metalitix.
+       * These presses will be recorded as a 'KeyDown' event with custom metrics.
+       * The custom metric will save '[M/T/X] Pressed' under 'custom-metric-cta'.
+       */
+      const KEYS = ['M', 'T', 'X']
+      window.addEventListener('keydown', function(event) {
+        if(!(event)) event = window.event
+        
+        const key = event.key.toUpperCase()
+        if(KEYS.includes(key)) {
+          logger.logKeyDownEvent(event.pageX, event.pageY, {
+            'custom-metric-cta': `${key} Pressed`
+          })
+        }
+      })
+    </script>
+  </body>
+</html>

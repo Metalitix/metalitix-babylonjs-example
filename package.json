@@ -1,0 +1,24 @@
+{
+  "name": "metalitix-babylonjs-example",
+  "version": "1.0.0",
+  "description": "BabylonJS example project showing a Metalitix® integration. Unlock spatial analytics for your 3D scene.",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./ -p 3500 -o /public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aircards/metalitix-babylonjs-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aircards/metalitix-babylonjs-example/issues"
+  },
+  "homepage": "https://github.com/Aircards/metalitix-babylonjs-example#readme",
+  "dependencies": {
+    "babylonjs": "^5.37.0",
+    "babylonjs-loaders": "^5.37.0",
+    "http-server": "^14.1.1"
+  }
+}
