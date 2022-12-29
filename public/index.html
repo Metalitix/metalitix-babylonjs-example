@@ -5,7 +5,7 @@
     <title>MetalitixLogger BabylonJS example</title>
     <script src="../node_modules/babylonjs/babylon.js"></script>
     <script src="../node_modules/babylonjs-loaders/babylon.glTFFileLoader.js"></script>
-    <script src="https://cdn.metalitix.com/scripts/mtx-poll-babylon-js.js"></script>
+    <script src="https://cdn.metalitix.com/logger/babylon-js/latest/babylon-js.js"></script>
     <style>
       html,
       body {
@@ -45,7 +45,7 @@
         return scene;
       };
 
-      /** 
+      /**
        * METALITIX INITIALIZATION
        * The code below initializes a Metalitix logger with custom settings:
        *  - Record data every half a second
@@ -78,7 +78,7 @@
       const KEYS = ['M', 'T', 'X']
       window.addEventListener('keydown', function(event) {
         if(!(event)) event = window.event
-        
+
         const key = event.key.toUpperCase()
         if(KEYS.includes(key)) {
           logger.logKeyDownEvent(event.pageX, event.pageY, {
