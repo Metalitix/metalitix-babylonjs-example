@@ -45,10 +45,9 @@
         return scene;
       };
 
-      /** 
+      /**
        * METALITIX INITIALIZATION
        * The code below initializes a Metalitix logger with custom settings:
-       *  - Record data every half a second
        *  - Enable a random prompt asking the user their engagement level
        *  - Set the color theme of the prompt 'white'
        */
@@ -78,7 +77,7 @@
       const KEYS = ['M', 'T', 'X']
       window.addEventListener('keydown', function(event) {
         if(!(event)) event = window.event
-        
+
         const key = event.key.toUpperCase()
         if(KEYS.includes(key)) {
           logger.setAttribute("Did Press", true)
